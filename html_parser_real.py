@@ -9,10 +9,12 @@ response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
 print(soup.h1.text)
 
+
+k = 10 # количество фильмов в списке (возможно от 1 до 250)
 result = {}
 all_list = soup.find('tbody', class_='lister-list')
 all_films = all_list.find_all_next(class_='titleColumn')
-for film in all_films[:10]:
+for film in all_films[:k]:
     text_href_tag = film.find('a')
     text = text_href_tag.text
     href = text_href_tag.get('href')
