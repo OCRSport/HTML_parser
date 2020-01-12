@@ -9,8 +9,7 @@ response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
 print(soup.h1.text)
 
-
-k = 10 # количество фильмов в списке (возможно от 1 до 250)
+k = 5  # количество фильмов в списке (возможно от 1 до 250)
 result = {}
 all_list = soup.find('tbody', class_='lister-list')
 all_films = all_list.find_all_next(class_='titleColumn')
@@ -22,15 +21,12 @@ for film in all_films[:k]:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     scores_tag = soup.find_all('span', itemprop="ratingValue")
-    scores = []
     for score in scores_tag:
-        scores.append(score.text)
-    result[text] = scores
+        result[text] = score.text
 result_list = list(result.items())
 result_list.sort(key=lambda i: i[1], reverse=True)
 num = 0
 for i in result_list:
     num += 1
     print(num, '-', i[0], ':', i[1])
-#pprint.pprint(result)
-
+# pprint.pprint(result)
